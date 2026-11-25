@@ -1,17 +1,21 @@
 const { google } = require('googleapis');
 require('dotenv').config();
 
+const cleanEnv = (val) => val?.trim().replace(/^["']|["']$/g, '');
+
 // Create Google Sheets auth
 const getAuth = () => {
   return new google.auth.JWT({
-    email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-    key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    email: cleanEnv(process.env.GOOGLE_SHEETS_CLIENT_EMAIL),
+    key: cleanEnv(process.env.GOOGLE_SHEETS_PRIVATE_KEY)?.replace(/\\n/g, '\n'),
     scopes: [
       'https://www.googleapis.com/auth/spreadsheets',
       'https://www.googleapis.com/auth/drive.readonly'
     ]
   });
 };
+
+const getSpreadsheetId = () => cleanEnv(process.env.GOOGLE_SHEETS_SPREADSHEET_ID);
 
 // Get sheets instance
 const getSheets = () => {
@@ -52,7 +56,7 @@ const formatDate = (date) => {
 const exportTanksToSheets = async ({ tanks, generatedBy }) => {
   try {
     const sheets = getSheets();
-    const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
+    const spreadsheetId = getSpreadsheetId();
 
     // Prepare header row
     const headers = [
@@ -171,7 +175,7 @@ const exportTanksToSheets = async ({ tanks, generatedBy }) => {
 const exportHistoryToSheets = async ({ history, tankName, generatedBy }) => {
   try {
     const sheets = getSheets();
-    const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
+    const spreadsheetId = getSpreadsheetId();
 
     const headers = [
       [`PetroVault — Tank History Report: ${tankName}`],
@@ -249,7 +253,7 @@ const exportHistoryToSheets = async ({ history, tankName, generatedBy }) => {
 const exportSingleTankToSheets = async ({ tank, history, generatedBy }) => {
   try {
     const sheets = getSheets();
-    const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
+    const spreadsheetId = getSpreadsheetId();
 
     // ── Sheet1: Tank snapshot ─────────────────────────────────────────────────
     const snapshotHeaders = [
