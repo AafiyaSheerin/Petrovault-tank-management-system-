@@ -29,7 +29,7 @@ services:
       - key: GOOGLE_SHEETS_SPREADSHEET_ID
         sync: false
       - key: FRONTEND_URL
-        sync: false
+        value: https://petrovault-frontend.onrender.com
 
   # ─── Frontend React + Vite Static Site ────────────────────────────────────────
   - type: web
@@ -40,7 +40,7 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        sync: false
+        value: https://petrovault-api.onrender.com/api/v1
     routes:
       - type: rewrite
         source: /*
