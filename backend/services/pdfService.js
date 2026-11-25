@@ -155,6 +155,7 @@ const generatePDF = async ({ title, tanks, dateRange, generatedBy }) => {
   try {
     browser = await puppeteer.launch({
       headless: 'new',
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
@@ -318,6 +319,7 @@ const generateSingleTankPDF = async ({ tank, history, generatedBy }) => {
   try {
     browser = await puppeteer.launch({
       headless: 'new',
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
     });
     const page = await browser.newPage();
