@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment variables - NEVER push these
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+
+# Build output
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Puppeteer cache
+.cache/
